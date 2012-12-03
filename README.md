@@ -3,7 +3,7 @@ Tiny utilities
 
 Tiny, generally useful scripts that work on data streams.  All (so far) are in awk, and all have the common options `header=0` which specifies the number of header lines on input to skip, and `skip_comment=1` which specifies whether to skip comment lines on input that begin with `#`.
 
-You can download them all in a [single zip file]().
+You can download them all in a [single zip file](https://github.com/downloads/douglasgscofield/tinyutils/tinyutils.zip).
 
 `boolify`
 turns a specified column into 0 or 1 based on its current value.
