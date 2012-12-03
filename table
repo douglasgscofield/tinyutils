@@ -1,0 +1,66 @@
+#!/usr/bin/awk -f
+#
+# Copyright (c) 2012 Douglas G. Scofield, Umeå Plant Sciences Centre, Umeå, Sweden
+# douglas.scofield@plantphys.umu.se
+# douglasgscofield@gmail.com
+#
+# No warranty is implied or assumed by this code.  Please send bugs, suggestions etc.
+#
+# Calculates a table of input values placed into bins of unique values.  Values may
+# be anything, thanks to awk's associative arrays.  If round_down is true, then
+# input values are assumed to be floats and are *floored down* to the next integer.
+# See hist if you want a histogram... this just prints a table of values with no
+# particular ordering in the output.
+#
+# CHANGELOG
+# 2012-12-03 : clean the script up a bit
+# 2012-11-27 : create the script
+
+
+BEGIN { 
+    # parameters
+    FS = "\t"; 
+    OFS = "\t"; 
+    header = 0;        # does the input have a header? if so how many lines?
+    print_header = 0;  # print a simple "val", "count" header on the output
+    skip_comment = 1;  # skip '#' lines on input
+    round_down = 0;    # if non-zero, assume input is float and round values down
+
+    # internal variables
+    n_a = 0; number of unique entries in the array
+    n_total = 0; number of data points seen
+}
+
+function floor(v,    ans) {
+	ans = int(v);
+	return((ans > v) ? ans - 1 : ans);
+}
+
+{  
+    if (header && NR <= header) next;
+    if (skip_comment && $0 ~ /^#/) next;
+
+    val = $1;
+    ++n_total;
+
+    if (round_down)
+        val = floor(val + 0.0);
+
+    if (! a[val]) {  # initialize counts as floats
+        a[val] = 1.0;
+        n_a += 1.0;
+    } else {
+        a[val] += 1.0;
+    }
+
+END {
+    if (print_header) 
+        print "val","count";
+    for (i in a) {
+        if (round_down) {
+            printf("%.0f%s%.0f\n", i, OFS, a[i]);
+        } else {
+            printf("%s%s%.0f\n", i, OFS, a[i]);
+        }
+    }
+}

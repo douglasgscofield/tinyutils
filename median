@@ -1,0 +1,76 @@
+#!/usr/bin/awk -f
+#
+# Copyright (c) 2012 Douglas G. Scofield, Umeå Plant Sciences Centre, Umeå, Sweden
+# douglas.scofield@plantphys.umu.se
+# douglasgscofield@gmail.com
+#
+# No warranty is implied or assumed by this code.  Please send bugs, suggestions etc.
+#
+# Compute the median of a set of numbers
+#
+# CHANGELOG
+# 2012-12-03 : clean the script up a bit
+
+
+BEGIN { 
+    # parameters
+    FS = "\t"; 
+    OFS = "\t"; 
+    n = 0;
+    header = 0;        # does the input have a header? if so how many lines?
+    skip_comment = 1;  # skip '#' lines on input
+}
+
+# quicksort array values, from http://awk.info/?quicksort
+# gawk provides asort() but we're living gawk free these days
+
+function qsort(array, left, right,     i, last)
+{
+	if (left >= right)
+		return;
+	swap(array, left, left+int((right - left + 1) * rand()));
+	last = left;
+	for (i = left + 1; i <= right; ++i)
+		if (array[i] < array[left])
+			swap(array, ++last, i);
+	swap(array, left, last);
+	qsort(array, left, last - 1);
+	qsort(array, last + 1, right);
+}
+
+# swap two values, utility function for qsort()
+
+function swap(array, i, j,     t)
+{
+	t = array[i]; array[i] = array[j]; array[j] = t;
+}
+
+# compute the median value of values within array, which has size array_size
+
+function compute_median(array, array_size,      ans)
+{
+    qsort(array, 1, array_size);
+    if (array_size == 1) {
+        ans = array[array_size];
+    } else if ((array_size % 2) == 1) {
+        ans = array[int(array_size / 2)];
+    } else {
+        ans = (array[array_size / 2] + array[array_size / 2 + 1]) / 2;
+    }
+    return ans;
+}
+
+{
+    if (NR <= header) { print; next; }
+    if (skip_comment && $0 ~ /^#/) { print; next; }
+
+    a[++n] = $1;
+}
+
+END {
+    if (n <= 0)
+        print "No input";
+    else
+        print compute_median(a, n);
+}
+
