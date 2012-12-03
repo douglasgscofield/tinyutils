@@ -18,19 +18,19 @@ BEGIN {
     min = +1.0E+300
     header = 0;        # does the input have a header? if so how many lines?
     skip_comment = 1;  # skip '#' lines on input
+    col = 1;           # which column do we operate on?
 }
 
 {
     if (NR <= header) { print; next; }
     if (skip_comment && $0 ~ /^#/) { print; next; }
 
-    if ($1 < min)
-        min = $1;
+    if ($(col) < min)
+        min = $(col);
+    ++n;
 }
 
 END {
-    if (n <= 0)
-        print "No input";
-    else
+    if (n)
         print min;
 }

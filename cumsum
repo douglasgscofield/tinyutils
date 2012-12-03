@@ -6,7 +6,7 @@
 #
 # No warranty is implied or assumed by this code.  Please send bugs, suggestions etc.
 #
-# Compute the mean of a set of numbers
+# Compute the cumulative sum of a set of numbers
 #
 # CHANGELOG
 # 2012-12-03 : clean the script up a bit
@@ -14,8 +14,9 @@
 
 BEGIN { 
     # parameters
+    OFS = FS; 
     n = 0;
-    sum = 0;
+    cumsum = 0;
     header = 0;        # does the input have a header? if so how many lines?
     skip_comment = 1;  # skip '#' lines on input
     col = 1;           # which column do we operate on?
@@ -25,11 +26,8 @@ BEGIN {
     if (NR <= header) { print; next; }
     if (skip_comment && $0 ~ /^#/) { print; next; }
 
-    sum += $(col);
-    ++n;
+    cumsum += $(col);
+    $(col) = cumsum;
+    print;
 }
 
-END {
-    if (n)
-        print (sum / n);
-}

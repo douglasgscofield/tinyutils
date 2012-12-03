@@ -15,15 +15,14 @@
 
 BEGIN { 
     # parameters
-    FS = "\t"; 
-    OFS = "\t"; 
-    col = 1;           # which column do we boolify?
+    OFS = FS; 
     header = 0;        # does the input have a header? if so how many lines?
     skip_comment = 1;  # skip '#' lines on input
     false = 0;         # set to the value that should be false
     # min              # set min if you want the script to assume input values 
                        # are numeric, it will only make values true that
                        # are >= min.
+    col = 1;           # which column do we boolify?
 }
 
 {

@@ -19,12 +19,12 @@
 
 BEGIN { 
     # parameters
-    FS = "\t"; 
-    OFS = "\t"; 
+    OFS = FS; 
     header = 0;        # does the input have a header? if so how many lines?
     print_header = 0;  # print a simple "val", "count" header on the output
     skip_comment = 1;  # skip '#' lines on input
     round_down = 0;    # if non-zero, assume input is float and round values down
+    col = 1;           # which column do we operate on?
 
     # internal variables
     n_a = 0; number of unique entries in the array
@@ -40,7 +40,7 @@ function floor(v,    ans) {
     if (header && NR <= header) next;
     if (skip_comment && $0 ~ /^#/) next;
 
-    val = $1;
+    val = $(col);
     ++n_total;
 
     if (round_down)
@@ -52,6 +52,7 @@ function floor(v,    ans) {
     } else {
         a[val] += 1.0;
     }
+}
 
 END {
     if (print_header) 

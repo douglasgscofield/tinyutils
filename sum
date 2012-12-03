@@ -6,7 +6,7 @@
 #
 # No warranty is implied or assumed by this code.  Please send bugs, suggestions etc.
 #
-# Compute the mean of a set of numbers
+# Compute the sum of a set of numbers
 #
 # CHANGELOG
 # 2012-12-03 : clean the script up a bit
@@ -31,5 +31,5 @@ BEGIN {
 
 END {
     if (n)
-        print (sum / n);
+        print sum;
 }

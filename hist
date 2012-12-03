@@ -17,13 +17,13 @@
 
 BEGIN { 
     # parameters
-    FS = "\t"; 
-    OFS = "\t"; 
+    OFS = FS; 
     sparse = 0.01;     # if less than this fraction of the hist is occupied, exit
     override = 0;      # sparse hist will not be printed unless override=1 is set
     header = 0;        # does the input have a header? if so how many lines?
     print_header = 0;  # print a simple "bin", "count" header on the output
     skip_comment = 1;  # skip '#' lines on input
+    col = 1;           # which column do we operate on?
 
     # internal variables
     n_a = 0.0;
@@ -41,7 +41,7 @@ function floor(v,    ans) {
     if (header && NR <= header) next;
     if (skip_comment && $0 ~ /^#/) next;
 
-    val = floor($1 + 0.0);
+    val = floor($(col) + 0.0);
     if (! a[val]) {  # initialize counts as floats
         a[val] = 1.0;
         n_a += 1.0;

@@ -14,11 +14,10 @@
 
 BEGIN { 
     # parameters
-    FS = "\t"; 
-    OFS = "\t"; 
     n = 0;
     header = 0;        # does the input have a header? if so how many lines?
     skip_comment = 1;  # skip '#' lines on input
+    col = 1;           # which column do we operate on?
 }
 
 # quicksort array values, from http://awk.info/?quicksort
@@ -64,13 +63,11 @@ function compute_median(array, array_size,      ans)
     if (NR <= header) { print; next; }
     if (skip_comment && $0 ~ /^#/) { print; next; }
 
-    a[++n] = $1;
+    a[++n] = $(col);
 }
 
 END {
-    if (n <= 0)
-        print "No input";
-    else
+    if (n)
         print compute_median(a, n);
 }
 
