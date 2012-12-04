@@ -1,0 +1,41 @@
+#!/usr/bin/awk -f
+#
+# Copyright (c) 2012 Douglas G. Scofield, Umeå Plant Sciences Centre, Umeå, Sweden
+# douglas.scofield@plantphys.umu.se
+# douglasgscofield@gmail.com
+#
+# No warranty is implied or assumed by this code.  Please send bugs, suggestions etc.
+#
+# Only pass along data lines for which column values fall within the specified range
+#
+# CHANGELOG
+# 2012-12-04 : create the script
+
+
+BEGIN { 
+    # parameters
+    OFS = FS; 
+    abs = min = max = "undef";
+    header = 0;        # does the input have a header? if so how many lines?
+    skip_comment = 1;  # skip '#' lines on input
+    col = 1;           # which column do we operate on?
+}
+
+{
+    if (abs != "undef" && min == "undef" && max == "undef") {
+        if (abs < 0) {
+            print "abs= must be >= 0"; exit 1;
+        }
+        max = abs; min = -abs;
+    } else if (abs == "undef" && (min == "undef" || max == "undef")) {
+        print "specify both min= and max=, or abs= (absolute range) on the command line";
+        exit 1;
+    }
+
+    if (NR <= header) { print; next; }
+    if (skip_comment && $0 ~ /^#/) { print; next; }
+
+    if ($(col) >= min && $(col) <= max)
+        print;
+}
+

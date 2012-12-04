@@ -64,6 +64,14 @@ median
 8
 min
 0
+stripfilt
+9
+3
+12.2
+0
+12
+9
+4
 sum
 56.2
 table
@@ -74,3 +82,14 @@ table
 12 1
 12.2 1
 0 1
+stripfilt inverse=1
+7
+stripfilt header=0 inverse=1
+inrange min=1 max=8
+7
+3
+4
+inrange abs=4
+3
+0
+4

@@ -9,6 +9,23 @@ Set any of these variables by using `key=value` on the command line.  For exampl
 median col=3 header=10 your.dat
 ````
 
+Stick these in a pipeline that ends with [spark](https://github.com/holman/spark) for quick visual summaries.  If `indels.vcf.gz` is a compressed [VCF][] file containing indel calls, then this will print a sparkline of indel sizes in the range of ±10bp:
+
+````bash
+$ zcat indels.vcf.gz \
+| stripfilt \
+| awk '{print length($5)-length($4)}' \
+| inrange abs=10 \
+| hist \
+| cut -f2 \
+| spark
+▁▁▁▁▁▁▁▁▂█▁▇▂▁▁▁▁▁▁▁▁
+````
+
+We get the second column of **hist** output because that's the counts.  This clearly shows the overabundance of single-base indels, and a slight overrepresentation of single-base deletions over insertions.
+
+[VCF]:  http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41
+
 * * *
 You can download all tiny utilities in a [single zip file](https://github.com/downloads/douglasgscofield/tinyutils/tinyutils.zip).  The zip file includes this README, a tests directory and a Makefile which can recreate the zip file and do a bit of testing.
 * * *
@@ -24,16 +41,35 @@ You can download all tiny utilities in a [single zip file](https://github.com/do
 **cumsum** : replace a column with its cumulative sum
 
 
-### Filters: output shorter than input, output a single column
+### Filters: output same as input with some lines selected
 
-**diffs** : produce successive pairwise numeric differences: 2nd - 1st, 3rd - 2nd, etc.  Length of output is length of input column - 1.
+**stripfilt** : strip header and comment lines beginning with `#`, or *only* pass headers and comment lines; can include empty/whitespace lines
+
+````bash
+stripfilt your.dat | ... # remove default 1-line header and comments
+stripfilt inverse=1 skip_comment=0 your.dat | ... # pass through only the header
+stripfilt inverse=1 header=0 your.dat | ... # pass through only comments
+stripfilt skip_blank=1 your.dat | ... # also remove empty and whitespace-only lines
+````
+
+**inrange** : 
+pass through lines for which the value of a column falls within a given range of values
+
+````bash
+inrange col=3 abs=10 your.dat | ... # column 3 is between -10 and 10 inclusive
+inrange min=0 max=1000 your.dat | ...  # column 1 is between 0 and 1000 inclusive
+````
+
+### Condensers: output shorter than and some function of the input
+
+**diffs** : produce successive pairwise numeric differences: 2nd - 1st, 3rd - 2nd, etc.  Length of output is length of data in input column - 1.
 
 
 ### Tablifiers: count summaries of input
 
-**hist** : create a count histogram from a numeric column, grouping values into integer bins of [*i*, *i* + 1).  Bins within the input range not having values in the input are printed with a count of 0.  To protect against potential errors in input or huge output, there must be more than `sparse=0.01` fraction of the input range occupied otherwise a message is printed instead of the full histogram; use `override=1` to override this behavior.
+**hist** : create a count histogram from a numeric column, grouping values into integer bins of [ *i*, *i* + 1).  Bins within the input range not having values in the input are printed with a count of 0.  To protect against potential errors in input or huge output, there must be more than `sparse=0.01` fraction of the input range occupied otherwise a message is printed instead of the full histogram; use `override=1` to override this behavior.
 
-**table** : count the occurrences of unique values in a column and print a table
+**table** : count the occurrences of unique values in a column and print a table of the values and their counts
 
 
 ### Summarizers: calculate a single value
@@ -48,7 +84,7 @@ You can download all tiny utilities in a [single zip file](https://github.com/do
 
 **sum** : ... of a column
 
-### Examples
+### More examples
 
 ````bash
 $ cat tests/tinyutils.dat
@@ -105,6 +141,16 @@ $ hist tests/tinyutils.dat
 11 0
 12 2
 
+$ inrange min=1 max=8 tests/tinyutils.dat
+7
+3
+4
+
+$ inrange abs=4 tests/tinyutils.dat
+3
+0
+4
+
 $ log tests/tinyutils.dat
 1.94591
 2.19722
@@ -136,6 +182,18 @@ $ median tests/tinyutils.dat
 
 $ min tests/tinyutils.dat
 0
+
+$ stripfilt tests/tinyutils.dat  # default is a single-line header
+9
+3
+12.2
+0
+12
+9
+4
+
+$ stripfilt inverse=1 tests/tinyutils.dat
+7
 
 $ sum tests/tinyutils.dat
 56.2
