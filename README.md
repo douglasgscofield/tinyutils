@@ -27,8 +27,12 @@ We get the second column of **hist** output because that's the counts.  This cle
 [VCF]:  http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41
 
 * * *
-You can download all tiny utilities in a [single zip file](https://github.com/downloads/douglasgscofield/tinyutils/tinyutils.zip).  The zip file includes this README, a tests directory and a Makefile which can recreate the zip file and do a bit of testing.
+You can download all tiny utilities in a [zip file][] or a [tarball][].  These files include this README, a tests directory and a Makefile which can recreate the zip file and do a bit of testing.
 * * *
+
+[zip file]:  https://github.com/downloads/douglasgscofield/tinyutils/tinyutils.zip
+[tarball]:   https://github.com/downloads/douglasgscofield/tinyutils/tinyutils.tar.gz
+
 
 ### Transformers: output same as input with single column transformed
 
@@ -41,7 +45,15 @@ You can download all tiny utilities in a [single zip file](https://github.com/do
 **cumsum** : replace a column with its cumulative sum
 
 
-### Filters: output same as input with some lines selected
+### Filters: output same as input with a subset of lines selected
+
+**inrange** : 
+pass through lines for which the value of a column falls within a given range of values
+
+````bash
+inrange col=3 abs=10 your.dat | ... # column 3 is between -10 and 10 inclusive
+inrange min=0 max=1000 your.dat | ...  # column 1 is between 0 and 1000 inclusive
+````
 
 **stripfilt** : strip header and comment lines beginning with `#`, or *only* pass headers and comment lines; can include empty/whitespace lines
 
@@ -52,13 +64,6 @@ stripfilt inverse=1 header=0 your.dat | ... # pass through only comments
 stripfilt skip_blank=1 your.dat | ... # also remove empty and whitespace-only lines
 ````
 
-**inrange** : 
-pass through lines for which the value of a column falls within a given range of values
-
-````bash
-inrange col=3 abs=10 your.dat | ... # column 3 is between -10 and 10 inclusive
-inrange min=0 max=1000 your.dat | ...  # column 1 is between 0 and 1000 inclusive
-````
 
 ### Condensers: output shorter than and some function of the input
 
@@ -83,6 +88,7 @@ inrange min=0 max=1000 your.dat | ...  # column 1 is between 0 and 1000 inclusiv
 **max** : ... of a column
 
 **sum** : ... of a column
+
 
 ### More examples
 

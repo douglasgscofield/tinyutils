@@ -14,6 +14,7 @@ UTILS = boolify \
 		table
 
 ZIPFILE = tinyutils.zip
+TARBALL = tinyutils.tar.gz
 
 TESTDIR = tests
 TESTINPUT = tinyutils.dat
@@ -21,7 +22,7 @@ TESTEXPECT = tinyutils.expected
 TESTOUTPUT = tinyutils.output
 TESTDIFF = tinyutils.testdiff
 
-all: test $(ZIPFILE)
+all: test $(ZIPFILE) $(TARBALL)
 
 $(ZIPFILE): $(UTILS) $(TESTDIR) Makefile README.md
 	@if [ -e $(TESTDIR)/$(TESTDIFF) -o -e $(TESTDIR)/$(TESTOUTPUT) ] ; then \
@@ -32,6 +33,17 @@ $(ZIPFILE): $(UTILS) $(TESTDIR) Makefile README.md
 		chmod 755 $(UTILS) $(TESTDIR); \
 		chmod 644 $(TESTDIR)/* Makefile README.md; \
 		zip -r $@ $^ && echo "Created $@" ; \
+	)
+
+$(TARBALL): $(UTILS) $(TESTDIR) Makefile README.md
+	@if [ -e $(TESTDIR)/$(TESTDIFF) -o -e $(TESTDIR)/$(TESTOUTPUT) ] ; then \
+		echo "$(TESTDIR)/ still contains $(TESTDIFF) and/or $(TESTOUTPUT)" ; \
+		exit 1; \
+	fi ;
+	@(  rm -f $@ ; \
+		chmod 755 $(UTILS) $(TESTDIR); \
+		chmod 644 $(TESTDIR)/* Makefile README.md; \
+		tar cvzf $@ $^ && echo "Created $@" ; \
 	)
 
 test: $(TESTDIR)/$(TESTOUTPUT)
