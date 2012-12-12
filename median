@@ -63,6 +63,10 @@ function compute_median(array, array_size,      ans)
     if (NR <= header) { print; next; }
     if (skip_comment && $0 ~ /^#/) { print; next; }
 
+    if (NF < col) {
+        print "on input line " NR " missing requested column" > "/dev/stderr";
+        exit 1;
+    }
     a[++n] = $(col);
 }
 

@@ -25,6 +25,10 @@ BEGIN {
     if (NR <= header) { next; }
     if (skip_comment && $0 ~ /^#/) { next; }
 
+    if (NF < col) {
+        print "on input line " NR " missing requested column" > "/dev/stderr";
+        exit 1;
+    }
     if (prev != "undef") 
         print $(col) - prev;
     prev = $(col);

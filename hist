@@ -41,6 +41,10 @@ function floor(v,    ans) {
     if (header && NR <= header) next;
     if (skip_comment && $0 ~ /^#/) next;
 
+    if (NF < col) {
+        print "on input line " NR " missing requested column" > "/dev/stderr";
+        exit 1;
+    }
     val = floor($(col) + 0.0);
     if (! a[val]) {  # initialize counts as floats
         a[val] = 1.0;
