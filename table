@@ -13,13 +13,15 @@
 # particular ordering in the output.
 #
 # CHANGELOG
+# 2013-05-15 : make FS and OFS be "\t" by default
 # 2012-12-03 : clean the script up a bit
 # 2012-11-27 : create the script
 
 
 BEGIN { 
     # parameters
-    OFS = FS; 
+    FS = "\t"; 
+    OFS = "\t"; 
     header = 0;        # does the input have a header? if so how many lines?
     print_header = 0;  # print a simple "val", "count" header on the output
     skip_comment = 1;  # skip '#' lines on input
@@ -27,8 +29,8 @@ BEGIN {
     col = 1;           # which column do we operate on?
 
     # internal variables
-    n_a = 0; number of unique entries in the array
-    n_total = 0; number of data points seen
+    n_a = 0; # number of unique entries in the array
+    n_total = 0; # number of data points seen
 }
 
 function floor(v,    ans) {

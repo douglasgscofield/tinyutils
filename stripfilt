@@ -10,12 +10,14 @@
 # Also handles empty/blank lines with skip_blank=1 option.
 #
 # CHANGELOG
+# 2013-05-15 : make FS and OFS be "\t" by default
 # 2012-12-04 : create the script
 
 
 BEGIN {
     # parameters
-    OFS = FS;
+    FS = "\t"; 
+    OFS = "\t"; 
     header = 1;        # does the input have a header? if so how many lines?
     skip_comment = 1;  # skip '#' lines on input
     skip_blank = 0;    # skip empty lines or those only containing whitespace?

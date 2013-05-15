@@ -9,12 +9,14 @@
 # Compute the successive differences between numbers in a column: 2nd - 1st, 3rd - 2nd, etc.
 #
 # CHANGELOG
+# 2013-05-15 : make FS and OFS be "\t" by default
 # 2012-12-03 : clean the script up a bit
 
 
 BEGIN { 
     # parameters
-    OFS = FS; 
+    FS = "\t"; 
+    OFS = "\t"; 
     prev = "undef";
     header = 0;        # does the input have a header? if so how many lines?
     skip_comment = 1;  # skip '#' lines on input

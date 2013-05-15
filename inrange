@@ -9,12 +9,14 @@
 # Only pass along data lines for which column values fall within the specified range
 #
 # CHANGELOG
+# 2013-05-15 : make FS and OFS be "\t" by default
 # 2012-12-04 : create the script
 
 
 BEGIN { 
     # parameters
-    OFS = FS; 
+    FS = "\t"; 
+    OFS = "\t"; 
     abs = min = max = "undef";
     header = 0;        # does the input have a header? if so how many lines?
     skip_comment = 1;  # skip '#' lines on input
