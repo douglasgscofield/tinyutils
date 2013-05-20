@@ -22,6 +22,7 @@ BEGIN {
     OFS = "\t"; 
     sparse = 0.01;     # if less than this fraction of the hist is occupied, exit
     override = 0;      # sparse hist will not be printed unless override=1 is set
+    drop_zero = 0;     # drop zero-valued entries, implies override=1
     header = 0;        # does the input have a header? if so how many lines?
     print_header = 0;  # print a simple "bin", "count" header on the output
     skip_comment = 1;  # skip '#' lines on input
@@ -67,10 +68,11 @@ END {
         print "bin","count";
 
     occupancy = n_a / (the_max - the_min);
-    if (occupancy < sparse && ! override) {
-        printf("Less than %f of the input range is occupied (%f).  Use override=1 to print the histogram anyway\n", sparse, occupancy) > "/dev/stderr";
+    if (occupancy < sparse && ! override && ! drop_zero) {
+        printf("Less than %f of the input range is occupied (%f).  Use override=1 or drop_zero=1 to print the histogram anyway\n", sparse, occupancy) > "/dev/stderr";
     } else {
         for (i = the_min; i <= the_max; i += 1.0) { 
+            if (drop_zero && a[i] == 0.0) continue;
             printf("%.0f%s%.0f\n", i, OFS, a[i] ? a[i] : 0.0);
         }
     }
