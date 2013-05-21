@@ -1,7 +1,7 @@
 Tiny utilities
 ==============
 
-Tiny scripts that work on a single column of data.  Some of these transform a single column of their input while passing everything through, some produce summary tables, and some produce a single summary value.  All (so far) are in awk, and all have the common options `header=0` which specifies the number of header lines on input to skip, `skip_comment=1` which specifies whether to skip comment lines on input that begin with `#`, and `col=1`, which specifies which column of the input stream should be examined.  Since they are awk scripts, they also have the standard variables for specifying the input column separator `FS="\t"` and the output column separator `OFS="\t"`.
+Tiny scripts that work on a single column of data.  Some of these transform a single column of their input while passing everything through, some produce summary tables, and some produce a single summary value.  All (so far) are in awk, and all have the common options `header=0` which specifies the number of header lines on input to skip, `skip_comment=1` which specifies whether to skip comment lines on input that begin with `#`, and `col=1`, which specifies which column of the input stream should be examined.  Since they are awk scripts, they also have the standard variables for specifying the input field separator `FS="\t"` and the output field separator `OFS="\t"`.  Default output column separator is `"\t"`.
 
 Set any of these variables by using `key=value` on the command line.  For example to find the median of the third column of numbers, when the first 10 lines of input are header:
 
@@ -27,7 +27,7 @@ We get the second column of **hist** output because that's the counts.  This cle
 [VCF]:  http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41
 
 * * *
-You can download all tiny utilities in a [zip file][] or a [tarball][].  These files include this README, a tests directory and a Makefile which can recreate the zip file and do a bit of testing.
+You can download all tiny utilities in a zip file by clicking on the ZIP file link above.
 * * *
 
 [zip file]:  https://github.com/downloads/douglasgscofield/tinyutils/tinyutils.zip
@@ -133,19 +133,19 @@ $ diffs tests/tinyutils.dat
 -5
 
 $ hist tests/tinyutils.dat
-0 1
-1 0
-2 0
-3 1
-4 1
-5 0
-6 0
-7 1
-8 0
-9 2
-10 0
-11 0
-12 2
+0	1
+1	0
+2	0
+3	1
+4	1
+5	0
+6	0
+7	1
+8	0
+9	2
+10	0
+11	0
+12	2
 
 $ inrange min=1 max=8 tests/tinyutils.dat
 7
@@ -205,11 +205,11 @@ $ sum tests/tinyutils.dat
 56.2
 
 $ table tests/tinyutils.dat
-3 1
-4 1
-7 1
-9 2
-12 1
-12.2 1
-0 1
+3	1
+4	1
+7	1
+9	2
+12	1
+12.2	1
+0	1
 ````
