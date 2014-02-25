@@ -20,14 +20,11 @@ BEGIN {
     header = 0;        # does the input have a header? if so how many lines?
     skip_comment = 1;  # skip '#' lines on input
     col = 1;           # which column do we operate on?
-    digits=6
+    digits=3
 }
 
-function round(D,N) {
-    up = D * (10 ^ N);
-    D = int(D + 0.5);
-    ans = D / (10 ^ N);
-    return(ans);
+function round(D, N) {
+    return(int(D * (10 ^ N) + 0.5) / (10 ^N));
 }
 
 {
@@ -38,6 +35,7 @@ function round(D,N) {
         print "on input line " NR " missing requested column" > "/dev/stderr";
         exit 1;
     }
+
     $(col) = round($(col), digits);
     print;
 }
