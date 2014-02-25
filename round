@@ -24,10 +24,10 @@ BEGIN {
 }
 
 function round(D,N) {
-    up = D * (10 ^ N)
-    D = int(D + 0.5)
-    ans = D / (10 ^ N)
-    return(ans)
+    up = D * (10 ^ N);
+    D = int(D + 0.5);
+    ans = D / (10 ^ N);
+    return(ans);
 }
 
 {
