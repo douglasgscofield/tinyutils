@@ -20,11 +20,12 @@ BEGIN {
     header = 0;        # does the input have a header? if so how many lines?
     skip_comment = 1;  # skip '#' lines on input
     col = 1;           # which column do we operate on?
-    digits=3
+    digits = 3
 }
 
 function round(D, N) {
-    return(int(D * (10 ^ N) + 0.5) / (10 ^N));
+    f = 10 ^ N;
+    return(int((D * f) + 0.5) / f);
 }
 
 {
