@@ -1,0 +1,42 @@
+#!/usr/bin/awk -f
+#
+# Copyright (c) 2012 Douglas G. Scofield, Umeå Plant Sciences Centre, Umeå, Sweden
+# douglas.scofield@plantphys.umu.se
+# douglasgscofield@gmail.com
+#
+# No warranty is implied or assumed by this code.  Please send bugs, suggestions etc.
+#
+# Round the value of a set of numbers
+#
+# CHANGELOG
+# 2014-02-25 : first version
+
+
+BEGIN { 
+    FS = "\t"; 
+    OFS = "\t"; 
+    # parameters
+    n = 0;
+    header = 0;        # does the input have a header? if so how many lines?
+    skip_comment = 1;  # skip '#' lines on input
+    col = 1;           # which column do we operate on?
+    digits = 3
+}
+
+function round(D, N) {
+    f = 10 ^ N;
+    return(int((D * f) + 0.5) / f);
+}
+
+{
+    if (NR <= header) { print; next; }
+    if (skip_comment && $0 ~ /^#/) { print; next; }
+
+    if (NF < col) {
+        print "on input line " NR " missing requested column" > "/dev/stderr";
+        exit 1;
+    }
+
+    $(col) = round($(col), digits);
+    print;
+}
