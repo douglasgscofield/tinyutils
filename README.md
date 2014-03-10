@@ -53,6 +53,7 @@ pass through lines for which the value of a column falls within a given range of
 ````bash
 inrange col=3 abs=10 your.dat | ... # column 3 is between -10 and 10 inclusive
 inrange min=0 max=1000 your.dat | ...  # column 1 is between 0 and 1000 inclusive
+inrange min=10000 your.dat | ... # column 1 is at least 10000 inclusive
 ````
 
 **stripfilt** : strip header and comment lines beginning with `#`, or *only* pass headers and comment lines; can include empty/whitespace lines

@@ -29,8 +29,9 @@ BEGIN {
             print "abs= must be >= 0"; exit 1;
         }
         max = abs; min = -abs;
-    } else if (abs == "undef" && (min == "undef" || max == "undef")) {
-        print "specify both min= and max=, or abs= (absolute range) on the command line";
+    } else if ((abs != "undef" && (min != "undef" || max != "undef")) 
+               || (abs == "undef" && min == "undef" && max == "undef")) {
+        print "specify min=, max=, both min= and max=, or abs= (absolute value of range) on the command line";
         exit 1;
     }
 
@@ -41,7 +42,7 @@ BEGIN {
         print "on input line " NR " missing requested column" > "/dev/stderr";
         exit 1;
     }
-    if ($(col) >= min && $(col) <= max)
+    if ((min == "undef" || $(col) >= min) && (max == "undef" || $(col) <= max))
         print;
 }
 
