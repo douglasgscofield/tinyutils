@@ -29,8 +29,8 @@ BEGIN {
             print "abs= must be >= 0"; exit 1;
         }
         max = abs; min = -abs;
-    } else if ((abs != "undef" && (min != "undef" || max != "undef")) 
-               || (abs == "undef" && min == "undef" && max == "undef")) {
+    } else if ((abs != "undef" && (min != "undef" || max != "undef")) ||
+               (abs == "undef" && min == "undef" && max == "undef")) {
         print "specify min=, max=, both min= and max=, or abs= (absolute value of range) on the command line";
         exit 1;
     }
