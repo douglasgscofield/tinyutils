@@ -9,6 +9,7 @@
 # Compute the successive differences between numbers in a column: 2nd - 1st, 3rd - 2nd, etc.
 #
 # CHANGELOG
+# 2014-05-27 : don't quit on missing-column error
 # 2013-05-15 : make FS and OFS be "\t" by default
 # 2012-12-03 : clean the script up a bit
 
@@ -29,7 +30,7 @@ BEGIN {
 
     if (NF < col) {
         print "on input line " NR " missing requested column" > "/dev/stderr";
-        exit 1;
+        next;
     }
     if (prev != "undef") 
         print $(col) - prev;

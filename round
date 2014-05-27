@@ -1,7 +1,6 @@
 #!/usr/bin/awk -f
 #
-# Copyright (c) 2012 Douglas G. Scofield, Umeå Plant Sciences Centre, Umeå, Sweden
-# douglas.scofield@plantphys.umu.se
+# Copyright (c) 2014 Douglas G. Scofield
 # douglasgscofield@gmail.com
 #
 # No warranty is implied or assumed by this code.  Please send bugs, suggestions etc.
@@ -9,6 +8,7 @@
 # Round the value of a set of numbers
 #
 # CHANGELOG
+# 2014-05-27 : don't quit on missing-column error
 # 2014-02-25 : first version
 
 
@@ -34,7 +34,7 @@ function round(D, N) {
 
     if (NF < col) {
         print "on input line " NR " missing requested column" > "/dev/stderr";
-        exit 1;
+        next;
     }
 
     $(col) = round($(col), digits);

@@ -9,6 +9,7 @@
 # Compute base-10 log of a set of numbers
 #
 # CHANGELOG
+# 2014-05-27 : don't quit on missing-column error
 # 2013-05-15 : make FS and OFS be "\t" by default
 # 2012-12-03 : clean the script up a bit
 
@@ -29,7 +30,7 @@ BEGIN {
 
     if (NF < col) {
         print "on input line " NR " missing requested column" > "/dev/stderr";
-        exit 1;
+        next;
     }
     $(col) = log($(col)) / log(10);
     print;

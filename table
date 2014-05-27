@@ -13,6 +13,7 @@
 # particular ordering in the output.
 #
 # CHANGELOG
+# 2014-05-27 : don't quit on missing-column error
 # 2013-05-15 : make FS and OFS be "\t" by default
 # 2012-12-03 : clean the script up a bit
 # 2012-11-27 : create the script
@@ -44,7 +45,7 @@ function floor(v,    ans) {
 
     if (NF < col) {
         print "on input line " NR " missing requested column" > "/dev/stderr";
-        exit 1;
+        next;
     }
     val = $(col);
     ++n_total;

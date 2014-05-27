@@ -9,6 +9,7 @@
 # Only pass along data lines for which column values fall within the specified range
 #
 # CHANGELOG
+# 2014-05-27 : don't quit on missing-column error
 # 2013-05-15 : make FS and OFS be "\t" by default
 # 2012-12-04 : create the script
 
@@ -40,7 +41,7 @@ BEGIN {
 
     if (NF < col) {
         print "on input line " NR " missing requested column" > "/dev/stderr";
-        exit 1;
+        next;
     }
     if ((min == "undef" || $(col) >= min) && (max == "undef" || $(col) <= max))
         print;

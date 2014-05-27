@@ -9,6 +9,7 @@
 # Compute the median of a set of numbers
 #
 # CHANGELOG
+# 2014-05-27 : don't quit on missing-column error
 # 2012-12-03 : clean the script up a bit
 
 
@@ -65,7 +66,7 @@ function compute_median(array, array_size,      ans)
 
     if (NF < col) {
         print "on input line " NR " missing requested column" > "/dev/stderr";
-        exit 1;
+        next;
     }
     a[++n] = $(col);
 }
