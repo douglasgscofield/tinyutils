@@ -21,6 +21,7 @@ BEGIN {
     abs = min = max = "undef";
     header = 0;        # does the input have a header? if so how many lines?
     skip_comment = 1;  # skip '#' lines on input
+    skip_missing = 1;  # skip lines without the column
     col = 1;           # which column do we operate on?
 }
 
@@ -41,7 +42,12 @@ BEGIN {
 
     if (NF < col) {
         print "on input line " NR " missing requested column" > "/dev/stderr";
-        next;
+        if (skip_missing) {
+            next;
+        } else {
+            print;
+            next;
+        }
     }
     if ((min == "undef" || $(col) >= min) && (max == "undef" || $(col) <= max))
         print;
