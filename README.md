@@ -78,7 +78,7 @@ stripfilt skip_blank=1 your.dat | ... # also remove empty and whitespace-only li
 **table** : count the occurrences of unique values in a column and print a table of the values and their counts
 
 
-### Summarizers: calculate a single value
+### Summarizers: calculate summary values
 
 **mean** : ... of a column
 
@@ -87,6 +87,8 @@ stripfilt skip_blank=1 your.dat | ... # also remove empty and whitespace-only li
 **min** : ... of a column
 
 **max** : ... of a column
+
+**range** : min and max of a column, separated by a tab
 
 **sum** : ... of a column
 
