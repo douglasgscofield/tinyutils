@@ -31,13 +31,15 @@ We get the second column of **hist** output because that's the counts.  This cle
 
 **boolify** : transform a column into 0 or 1 based on its current value
 
+**cumsum** : replace a column with its cumulative sum
+
 **log** : transform a column into its natural logarithm
 
 **log10** : transform a column into its base-10 logarithm
 
 **mult** : multiply a column by a given factor
 
-**cumsum** : replace a column with its cumulative sum
+**round** : round values to a given number of `digits=` after the decimal point
 
 
 
