@@ -4,7 +4,8 @@
 # douglas.scofield@ebc.uu.se
 # douglasgscofield@gmail.com
 #
-# No warranty is implied or assumed by this code.  Please send bugs, suggestions etc.
+# No warranty is implied or assumed by this code.  Please see LICENSE.
+# Bugs and suggestions to https://github.com/douglasgscofield/tinyutils/issues.
 #
 # Compute the natural log of a set of numbers
 #
