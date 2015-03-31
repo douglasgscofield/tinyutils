@@ -9,6 +9,9 @@ UTILS = boolify \
 		mean \
 		median \
 		min \
+		mult \
+		range \
+		round \
 		stripfilt \
 		sum \
 		table
@@ -56,18 +59,25 @@ test: $(TESTDIR)/$(TESTOUTPUT)
 		fi ; \
 	)
 
+# Sort table output for comparison because keys come out in various orders
+
 $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 	@(  cd $(TESTDIR); rm -f $(TESTDIFF) ; \
 		cat /dev/null > $(TESTOUTPUT) ; \
-		for U in boolify cumsum diffs hist log log10 max mean median min stripfilt sum table; do \
+		for U in boolify cumsum diffs hist log log10 max mean median min range stripfilt sum ; do \
 			echo $$U >> $(TESTOUTPUT) ;\
 	    	../$$U $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		done ; \
-		echo stripfilt inverse=1 >> $(TESTOUTPUT); ../stripfilt inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
-		echo stripfilt header=0 inverse=1 >> $(TESTOUTPUT); ../stripfilt header=0 inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
-		echo inrange min=1 max=8 >> $(TESTOUTPUT); ../inrange min=1 max=8 $(TESTINPUT) >> $(TESTOUTPUT) ; \
-		echo inrange abs=4 >> $(TESTOUTPUT); ../inrange abs=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'mult mult=2' >> $(TESTOUTPUT); ../mult mult=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'round digits=0' >> $(TESTOUTPUT); ../round digits=0 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'table | sort' >> $(TESTOUTPUT); ../table $(TESTINPUT) | sort -k1,1 -n >> $(TESTOUTPUT) ; \
+		echo 'stripfilt inverse=1' >> $(TESTOUTPUT); ../stripfilt inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'stripfilt header=0 inverse=1' >> $(TESTOUTPUT); ../stripfilt header=0 inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'inrange min=1 max=8' >> $(TESTOUTPUT); ../inrange min=1 max=8 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'inrange abs=4' >> $(TESTOUTPUT); ../inrange abs=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 	)
 
 clean:
 	rm -f $(ZIPFILE) ; ( cd $(TESTDIR) ; rm -f $(TESTDIFF) $(TESTOUTPUT) )
+
+.PHONY: $(UTILS)

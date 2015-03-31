@@ -26,13 +26,6 @@ We get the second column of **hist** output because that's the counts.  This cle
 
 [VCF]:  http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41
 
-* * *
-You can download all tiny utilities in a zip file by clicking on the ZIP file link above.
-* * *
-
-[zip file]:  https://github.com/downloads/douglasgscofield/tinyutils/tinyutils.zip
-[tarball]:   https://github.com/downloads/douglasgscofield/tinyutils/tinyutils.tar.gz
-
 
 ### Transformers: output same as input with single column transformed
 
@@ -42,7 +35,10 @@ You can download all tiny utilities in a zip file by clicking on the ZIP file li
 
 **log10** : transform a column into its base-10 logarithm
 
+**mult** : multiply a column by a given factor
+
 **cumsum** : replace a column with its cumulative sum
+
 
 
 ### Filters: output same as input with a subset of lines selected
@@ -95,7 +91,7 @@ stripfilt skip_blank=1 your.dat | ... # also remove empty and whitespace-only li
 
 ### More examples
 
-````bash
+```bash
 $ cat tests/tinyutils.dat
 7
 9
@@ -192,6 +188,29 @@ $ median tests/tinyutils.dat
 $ min tests/tinyutils.dat
 0
 
+$ mult mult=2 tests/tinyutils.dat
+14
+18
+6
+24.4
+0
+24
+18
+8
+
+$ range tests/tinyutils.dat
+0	12.2
+
+$ round digits=0 tests/tinyutils.dat
+7
+9
+3
+12
+0
+12
+9
+4
+
 $ stripfilt tests/tinyutils.dat  # default is a single-line header
 9
 3
@@ -215,4 +234,4 @@ $ table tests/tinyutils.dat
 12	1
 12.2	1
 0	1
-````
+```

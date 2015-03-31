@@ -1,6 +1,7 @@
 #!/usr/bin/awk -f
 #
-# Copyright (c) 2014 Douglas G. Scofield
+# Copyright (c) 2014 Douglas G. Scofield, Uppsala University
+# douglas.scofield@ebc.uu.se
 # douglasgscofield@gmail.com
 #
 # No warranty is implied or assumed by this code.  Please send bugs, suggestions etc.
