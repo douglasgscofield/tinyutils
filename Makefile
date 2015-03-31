@@ -70,7 +70,7 @@ $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 		done ; \
 		echo 'mult mult=2' >> $(TESTOUTPUT); ../mult mult=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'round digits=0' >> $(TESTOUTPUT); ../round digits=0 $(TESTINPUT) >> $(TESTOUTPUT) ; \
-		echo 'table | sort' >> $(TESTOUTPUT); ../table $(TESTINPUT) | sort -k1,1 -n >> $(TESTOUTPUT) ; \
+		echo 'table | sort -k1,1 -n' >> $(TESTOUTPUT); ../table $(TESTINPUT) | sort -k1,1 -n >> $(TESTOUTPUT) ; \
 		echo 'stripfilt inverse=1' >> $(TESTOUTPUT); ../stripfilt inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'stripfilt header=0 inverse=1' >> $(TESTOUTPUT); ../stripfilt header=0 inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'inrange min=1 max=8' >> $(TESTOUTPUT); ../inrange min=1 max=8 $(TESTINPUT) >> $(TESTOUTPUT) ; \
