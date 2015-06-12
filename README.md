@@ -62,10 +62,11 @@ stripfilt skip_blank=1 your.dat | ... # also remove empty and whitespace-only li
 ````
 
 
-### Condensers: output shorter than and some function of the input
+### Condensers: output condensed from and some function of the input
 
 **diffs** : produce successive pairwise numeric differences: 2nd - 1st, 3rd - 2nd, etc.  Length of output is length of data in input column - 1.
 
+**ncol** : print the number of columns in each line
 
 ### Tablifiers: count summaries of input
 
