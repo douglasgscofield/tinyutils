@@ -68,9 +68,11 @@ stripfilt skip_blank=1 your.dat | ... # also remove empty and whitespace-only li
 
 ### Condensers: output condensed from and some function of the input
 
-**diffs** : produce successive pairwise numeric differences: 2nd - 1st, 3rd - 2nd, etc.  Length of output is length of data in input column - 1.
+**len** : print the length in characters of each line, excluding newline characters
 
 **ncol** : print the number of columns in each line
+
+**diffs** : produce successive pairwise numeric differences: 2nd - 1st, 3rd - 2nd, etc.  Length of output is length of data in input column - 1.
 
 ### Tablifiers: count summaries of input
 
@@ -126,6 +128,26 @@ $ cumsum tests/tinyutils.dat
 43.2
 52.2
 56.2
+
+$ ncol tests/tinyutils.dat
+1
+1
+1
+1
+1
+1
+1
+1
+
+$ len tests/tinyutils.dat
+1
+1
+1
+4
+1
+2
+1
+1
 
 $ diffs tests/tinyutils.dat
 2
