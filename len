@@ -1,0 +1,28 @@
+#!/usr/bin/awk -f
+#
+# Copyright (c) 2015 Douglas G. Scofield, Uppsala University
+# douglas.scofield@ebc.uu.se
+# douglasgscofield@gmail.com
+#
+# This code is covered by the Gnu GPLv2, please see LICENSE.
+# Bugs and suggestions to https://github.com/douglasgscofield/tinyutils/issues.
+#
+# Print the length of each line in characters, leaving off any newline
+#
+# CHANGELOG
+# 2015-08-25 : create the script.  Note skip_comment off by default
+
+
+BEGIN { 
+    # parameters
+    header = 0;        # does the input have a header? if so how many lines?
+    skip_comment = 0;  # skip '#' lines on input
+}
+
+{
+    if (NR <= header) { print; next; }
+    if (skip_comment && $0 ~ /^#/) { print; next; }
+
+    print length($0);
+}
+
