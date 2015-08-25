@@ -39,6 +39,8 @@ We get the second column of **hist** output because that's the counts.  This cle
 
 **mult** : multiply a column by a given factor
 
+**div** : divide a column by a given factor
+
 **round** : round values to a given number of `digits=` after the decimal point
 
 
@@ -200,6 +202,16 @@ $ mult mult=2 tests/tinyutils.dat
 24
 18
 8
+
+$ div div=2 tests/tinyutils.dat
+3.5
+4.5
+1.5
+6.1
+0
+6
+4.5
+2
 
 $ range tests/tinyutils.dat
 0	12.2

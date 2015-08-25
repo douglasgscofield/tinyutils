@@ -69,6 +69,7 @@ $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 	    	../$$U $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		done ; \
 		echo 'mult mult=2' >> $(TESTOUTPUT); ../mult mult=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'div div=2' >> $(TESTOUTPUT); ../div div=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'round digits=0' >> $(TESTOUTPUT); ../round digits=0 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'table | sort -k1,1 -n' >> $(TESTOUTPUT); ../table $(TESTINPUT) | sort -k1,1 -n >> $(TESTOUTPUT) ; \
 		echo 'stripfilt inverse=1' >> $(TESTOUTPUT); ../stripfilt inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
