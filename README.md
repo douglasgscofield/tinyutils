@@ -72,6 +72,8 @@ stripfilt skip_blank=1 your.dat | ... # also remove empty and whitespace-only li
 
 **ncol** : print the number of columns in each line
 
+**showcol** : prefix the contents of each column of the first line (by default, skipping comments) by the column number
+
 **diffs** : produce successive pairwise numeric differences: 2nd - 1st, 3rd - 2nd, etc.  Length of output is length of data in input column - 1.
 
 ### Tablifiers: count summaries of input
@@ -271,4 +273,11 @@ $ table tests/tinyutils.dat
 12	1
 12.2	1
 0	1
+```
+
+**showcol** can eliminate errors from column-counting.
+
+```
+$ cat /etc/passwd | tr ':' '\t' | tail -n 1 | showcol
+1:_launchservicesd	2:*	3:239	4:239	5:_launchservicesd	6:/var/empty	7:/usr/bin/false
 ```
