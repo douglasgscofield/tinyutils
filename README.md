@@ -281,3 +281,5 @@ $ table tests/tinyutils.dat
 $ cat /etc/passwd | tr ':' '\t' | tail -n 1 | showcol
 1:_launchservicesd	2:*	3:239	4:239	5:_launchservicesd	6:/var/empty	7:/usr/bin/false
 ```
+
+By default the number of lines shown is `lines=1`, and the separator used is `sep=":"`

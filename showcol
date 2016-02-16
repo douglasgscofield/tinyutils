@@ -10,6 +10,7 @@
 # Print the contents of each column prefixed by the column number
 #
 # CHANGELOG
+# 2016-02-16 : do not print header and comment lines as they are skipped
 # 2016-02-11 : create the script
 
 
@@ -23,8 +24,8 @@ BEGIN {
 }
 
 {
-    if (NR <= header) { print; next; }
-    if (skip_comment && $0 ~ /^#/) { print; next; }
+    if (NR <= header) { next; }
+    if (skip_comment && $0 ~ /^#/) { next; }
     if (lines > 0) {
         for (col = 1; col <= NF; ++col) {
             $(col) = col sep $(col);
