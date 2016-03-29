@@ -80,6 +80,8 @@ stripfilt skip_blank=1 your.dat | ... # also remove empty and whitespace-only li
 
 **hist** : create a count histogram from a numeric column, grouping values into integer bins of [ *i*, *i* + 1).  Bins within the input range not having values in the input are printed with a count of 0.  To protect against potential errors in input or huge output, there must be more than `sparse=0.01` fraction of the input range occupied otherwise a message is printed instead of the full histogram; use `override=1` to override this behavior.  Use `drop_zero=1` to drop zero-valued bins from the output; this option implies `override=1`.
 
+**histbin** : create a count histogram from a numeric column, grouping values into integer bins of [ *i*, *i* + `bin`), where `bin=10` by default and *i* is modulo `bin`.  Bins within the input range not having values in the input are printed with a count of 0.  Use `drop_zero=1` to drop zero-valued bins from the output.
+
 **table** : count the occurrences of unique values in a column and print a table of the values and their counts
 
 
@@ -174,6 +176,10 @@ $ hist tests/tinyutils.dat
 10	0
 11	0
 12	2
+
+$ histbin tests/tinyutils.dat
+0	6
+10	2
 
 $ inrange min=1 max=8 tests/tinyutils.dat
 7

@@ -3,6 +3,7 @@ UTILS = boolify \
 		diffs \
 		div \
 		hist \
+		histbin \
 		inrange \
 		len \
 		log \
@@ -68,7 +69,7 @@ test: $(TESTDIR)/$(TESTOUTPUT)
 $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 	@(  cd $(TESTDIR); rm -f $(TESTDIFF) ; \
 		cat /dev/null > $(TESTOUTPUT) ; \
-		for U in boolify cumsum diffs hist log log10 max mean median min range stripfilt sum ncol len showcol; do \
+		for U in boolify cumsum diffs hist histbin log log10 max mean median min range stripfilt sum ncol len showcol; do \
 			echo $$U >> $(TESTOUTPUT) ;\
 	    	../$$U $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		done ; \
