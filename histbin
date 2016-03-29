@@ -36,8 +36,8 @@ BEGIN {
 
 function floor_to_bin(v,    ans) {
     vv = v / bin;
-	ans = int(vv);
-	ans = ((ans > vv) ? ans - 1 : ans);
+    ans = int(vv);
+    ans = ((ans > vv) ? ans - 1 : ans);
     return(ans * bin);
 }
 
