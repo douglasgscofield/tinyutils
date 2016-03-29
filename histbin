@@ -20,7 +20,6 @@ BEGIN {
     FS = "\t"; 
     OFS = "\t"; 
     bin = 10;          # bin size
-    sparse = 0.01;     # if less than this fraction of the hist is occupied, exit
     drop_zero = 0;     # drop zero-valued entries, implies override=1
     header = 0;        # does the input have a header? if so how many lines?
     print_header = 0;  # print a simple "bin", "count" header on the output
@@ -28,8 +27,6 @@ BEGIN {
     col = 1;           # which column do we operate on?
 
     # internal variables
-    n_a = 0.0;
-    n_total = 0.0;
     the_min = 1.0e+20  # may be too low for your application
     the_max = -1.0e+20  # may be too high for your application
 }
@@ -53,10 +50,8 @@ function floor_to_bin(v,    ans) {
     val = floor_to_bin($(col) + 0.0);
     if (! a[val]) {  # initialize counts as floats
         a[val] = 1.0;
-        n_a += 1.0;
     } else {
         a[val] += 1.0;
-        n_total += 1.0;
     }
     if (val > the_max) {
         the_max = val;
