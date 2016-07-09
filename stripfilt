@@ -1,6 +1,6 @@
 #!/usr/bin/awk -f
 #
-# Copyright (c) 2012, 2015 Douglas G. Scofield, Uppsala University
+# Copyright (c) 2012, 2015, 2016 Douglas G. Scofield, Uppsala University
 # douglas.scofield@ebc.uu.se
 # douglasgscofield@gmail.com
 #
@@ -11,6 +11,7 @@
 # Also handles empty/blank lines with skip_blank=1 option.
 #
 # CHANGELOG
+# 2016-07-09 : add inverse_early
 # 2013-05-15 : make FS and OFS be "\t" by default
 # 2012-12-04 : create the script
 
@@ -23,6 +24,7 @@ BEGIN {
     skip_comment = 1;  # skip '#' lines on input
     skip_blank = 0;    # skip empty lines or those only containing whitespace?
     inverse = 0;       # do we instead only print the header and comments?
+    inverse_early = 1; # with inverse=1, do we stop when we see the first non-skipped line?
 }
 
 {
@@ -45,5 +47,7 @@ BEGIN {
     }
     if (! inverse)
         print;
+    else if (inverse_early)
+        exit;
 }
 

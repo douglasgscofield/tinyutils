@@ -59,10 +59,20 @@ inrange min=10000 your.dat | ... # column 1 is at least 10000 inclusive
 **stripfilt** : strip header and comment lines beginning with `#`, or *only* pass headers and comment lines; can include empty/whitespace lines
 
 ````bash
-stripfilt your.dat | ... # remove default 1-line header and comments
-stripfilt inverse=1 skip_comment=0 your.dat | ... # pass through only the header
-stripfilt inverse=1 header=0 your.dat | ... # pass through only comments
-stripfilt skip_blank=1 your.dat | ... # also remove empty and whitespace-only lines
+# remove default 1-line header and comments
+stripfilt your.dat | ...
+
+# pass through only the header line
+stripfilt inverse=1 skip_comment=0 your.dat | ...
+
+# pass through only 'header' comments, stopping after first non-comment line
+stripfilt inverse=1 header=0 your.dat | ...
+
+# pass through only comment lines wherever they appear
+stripfilt inverse=1 inverse_early=0 header=0 your.dat | ...
+
+# also remove empty and whitespace-only lines
+stripfilt skip_blank=1 your.dat | ...
 ````
 
 
