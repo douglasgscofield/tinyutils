@@ -1,0 +1,36 @@
+#!/usr/bin/awk -f
+#
+# Copyright (c) 2012,2014 Douglas G. Scofield, Uppsala University
+# douglas.scofield@ebc.uu.se
+# douglasgscofield@gmail.com
+#
+# This code is covered by the Gnu GPLv2, please see LICENSE.
+# Bugs and suggestions to https://github.com/douglasgscofield/tinyutils/issues.
+#
+# Compute the natural exponential of a set of numbers
+#
+# CHANGELOG
+# 2016-07-10 : initiate the script
+
+
+BEGIN { 
+    FS = "\t"; 
+    OFS = "\t"; 
+    # parameters
+    n = 0;
+    header = 0;        # does the input have a header? if so how many lines?
+    skip_comment = 1;  # skip '#' lines on input
+    col = 1;           # which column do we operate on?
+}
+
+{
+    if (NR <= header) { print; next; }
+    if (skip_comment && $0 ~ /^#/) { print; next; }
+
+    if (NF < col) {
+        print "on input line " NR " missing requested column" > "/dev/stderr";
+        next;
+    }
+    $(col) = exp($(col));
+    print;
+}

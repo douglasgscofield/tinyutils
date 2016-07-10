@@ -2,12 +2,16 @@ UTILS = boolify \
 		cumsum \
 		diffs \
 		div \
+		exp \
+		exp10 \
+		exp2 \
 		hist \
 		histbin \
 		inrange \
 		len \
 		log \
 		log10 \
+		log2 \
 		max \
 		mean \
 		median \
@@ -69,7 +73,7 @@ test: $(TESTDIR)/$(TESTOUTPUT)
 $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 	@(  cd $(TESTDIR); rm -f $(TESTDIFF) ; \
 		cat /dev/null > $(TESTOUTPUT) ; \
-		for U in boolify cumsum diffs hist histbin log log10 max mean median min range stripfilt sum ncol len showcol; do \
+		for U in boolify cumsum diffs exp exp10 exp2 hist histbin log log10 log2 max mean median min range stripfilt sum ncol len showcol; do \
 			echo $$U >> $(TESTOUTPUT) ;\
 	    	../$$U $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		done ; \
@@ -79,6 +83,7 @@ $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 		echo 'table | sort -k1,1 -n' >> $(TESTOUTPUT); ../table $(TESTINPUT) | sort -k1,1 -n >> $(TESTOUTPUT) ; \
 		echo 'stripfilt inverse=1' >> $(TESTOUTPUT); ../stripfilt inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'stripfilt header=0 inverse=1' >> $(TESTOUTPUT); ../stripfilt header=0 inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'stripfilt inverse=1 inverse_early=0 header=0' >> $(TESTOUTPUT); ../stripfilt inverse=1 inverse_early=0 header=0 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'inrange min=1 max=8' >> $(TESTOUTPUT); ../inrange min=1 max=8 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'inrange abs=4' >> $(TESTOUTPUT); ../inrange abs=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 	)
