@@ -26,6 +26,8 @@ We get the second column of **hist** output because that's the counts.  This cle
 
 [VCF]:  http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41
 
+We get the second column of **hist** output because that's the counts.  This clearly shows the overabundance of single-base indels, and a slight overrepresentation of single-base deletions over insertions.
+
 
 ### Transformers: output same as input with single column transformed
 
@@ -33,7 +35,15 @@ We get the second column of **hist** output because that's the counts.  This cle
 
 **cumsum** : replace a column with its cumulative sum
 
+**exp** : transform a column into its natural exponential
+
+**exp2** : transform a column into its base-2 exponential
+
+**exp10** : transform a column into its base-10 exponential
+
 **log** : transform a column into its natural logarithm
+
+**log2** : transform a column into its base-2 logarithm
 
 **log10** : transform a column into its base-10 logarithm
 
@@ -209,6 +219,36 @@ $ inrange abs=4 tests/tinyutils.dat
 0
 4
 
+$ exp tests/tinyutils.dat
+1096.63
+8103.08
+20.0855
+198789
+1
+162755
+8103.08
+54.5982
+
+$ exp10 tests/tinyutils.dat
+10000000
+1000000000
+1000
+1.58489e+12
+1
+1000000000000
+1000000000
+10000
+
+$ exp2 tests/tinyutils.dat
+128
+512
+8
+4705.07
+1
+4096
+512
+16
+
 $ log tests/tinyutils.dat
 1.94591
 2.19722
@@ -228,6 +268,16 @@ $ log10 tests/tinyutils.dat
 1.07918
 0.954243
 0.60206
+
+$ log2 tests/tinyutils.dat
+2.80735
+3.16993
+1.58496
+3.60881
+-inf
+3.58496
+3.16993
+2
 
 $ max tests/tinyutils.dat
 12.2
@@ -285,6 +335,10 @@ $ stripfilt tests/tinyutils.dat  # default is a single-line header
 
 $ stripfilt inverse=1 tests/tinyutils.dat
 7
+
+$ stripfilt header=0 inverse=1 tests/tinyutils.dat
+
+$ stripfilt inverse=1 inverse_early=0 header=0 tests/tinyutils.dat
 
 $ sum tests/tinyutils.dat
 56.2
