@@ -94,10 +94,10 @@ stripfilt skip_blank=1 your.dat | ...
 
 **lwhich** : print the line numbers of lines containing a specified value (`val=`) in a column (`col=`, default 1)
 
-Print the contents of the first, longest input line in `file` by first finding the maximum line length, then the first line number at which that line length occurs.  In addition to `lwhich`, this solution uses the tinyutils `len` and `max`. `line line=1` could also be used in place of `head -1`.
+Print the contents of the first, longest input line in `file.txt` by first finding the maximum line length, then the first line number at which that line length occurs.  In addition to `lwhich`, this solution uses the tinyutils `len` and `max`. `line line=1` could also be used in place of `head -1` to get the first line number.
 
 ```
-line line=$(len file | lwhich val=$(len file | max) | head -1) file
+line line=$(len file.txt | lwhich val=$(len file.txt | max) | head -1) file.txt
 ```
 
 **ncol** : print the number of columns in each line
