@@ -1,6 +1,6 @@
 .DS_Store
 ._*
-*.zip
-*.tar.gz
+tinyutils*.zip
+tinyutils*.tar.gz
 *.swp
 linkscript.sh

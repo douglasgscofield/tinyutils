@@ -1,3 +1,5 @@
+VERSION = 1.3
+
 UTILS = boolify \
 		cumsum \
 		diffs \
@@ -27,8 +29,6 @@ UTILS = boolify \
 		sum \
 		table
 
-ZIPFILE = tinyutils.zip
-TARBALL = tinyutils.tar.gz
 LINKSCRIPT = linkscript.sh
 SCRIPTDIR = $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
@@ -53,26 +53,30 @@ linkscript: $(UTILS)
 
 all: test $(ZIPFILE) $(TARBALL)
 
-$(ZIPFILE): $(UTILS) $(TESTDIR) Makefile README.md
+zipfile: $(UTILS) $(TESTDIR) Makefile README.md
 	@if [ -e $(TESTDIR)/$(TESTDIFF) -o -e $(TESTDIR)/$(TESTOUTPUT) ] ; then \
 		echo "$(TESTDIR)/ still contains $(TESTDIFF) and/or $(TESTOUTPUT)" ; \
 		exit 1; \
 	fi ;
-	@(  rm -f $@ ; \
+	@(  echo "Creating zipfile for version $(VERSION)" ; \
+	    ZIPFILE=tinyutils-$(VERSION).zip ; \
+		rm -f $$ZIPFILE ; \
 		chmod 755 $(UTILS) $(TESTDIR); \
 		chmod 644 $(TESTDIR)/* Makefile README.md; \
-		zip -r $@ $^ && echo "Created $@" ; \
+		zip -r $$ZIPFILE $^ && echo "Created $$ZIPFILE" ; \
 	)
 
-$(TARBALL): $(UTILS) $(TESTDIR) Makefile README.md
+tarball: $(UTILS) $(TESTDIR) Makefile README.md
 	@if [ -e $(TESTDIR)/$(TESTDIFF) -o -e $(TESTDIR)/$(TESTOUTPUT) ] ; then \
 		echo "$(TESTDIR)/ still contains $(TESTDIFF) and/or $(TESTOUTPUT)" ; \
 		exit 1; \
 	fi ;
-	@(  rm -f $@ ; \
+	@(  echo "Creating tarball for version $(VERSION)" ; \
+	    TARBALL=tinyutils-$(VERSION).tar.gz ; \
+		rm -f $$TARBALL ; \
 		chmod 755 $(UTILS) $(TESTDIR); \
 		chmod 644 $(TESTDIR)/* Makefile README.md; \
-		tar cvzf $@ $^ && echo "Created $@" ; \
+		tar cvzf $$TARBALL $^ && echo "Created $$TARBALL" ; \
 	)
 
 test: $(TESTDIR)/$(TESTOUTPUT)
