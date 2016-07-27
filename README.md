@@ -1,7 +1,7 @@
 Tiny utilities
 ==============
 
-Tiny scripts that work on a single column of data.  Some of these transform a single column of their input while passing everything through, some produce summary tables, and some produce a single summary value.  All (so far) are in awk, and all have the common options `header=0` which specifies the number of header lines on input to skip, `skip_comment=1` which specifies whether to skip comment lines on input that begin with `#`, and `col=1`, which specifies which column of the input stream should be examined.  Since they are awk scripts, they also have the standard variables for specifying the input field separator `FS="\t"` and the output field separator `OFS="\t"`.  Default output column separator is `"\t"`.
+Tiny scripts that work on a single column of data.  Some of these transform a single column of their input while passing everything through, some produce summary tables, and some produce a single summary value.  All (so far) are in awk, and almost all have the common options `header=0` which specifies the number of header lines on input to skip, `skip_comment=1` which specifies whether to skip comment lines on input that begin with `#`, and `col=1`, which specifies which column of the input stream should be examined.  Since they are awk scripts, they also have the standard variables for specifying the input field separator `FS="\t"` and the output field separator `OFS="\t"`.  Default output column separator is `"\t"`.
 
 Set any of these variables by using `key=value` on the command line.  For example to find the median of the third column of numbers, when the first 10 lines of input are header:
 
@@ -66,6 +66,8 @@ inrange min=0 max=1000 your.dat | ...  # column 1 is between 0 and 1000 inclusiv
 inrange min=10000 your.dat | ... # column 1 is at least 10000 inclusive
 ````
 
+**line** : print a specific line (`line=`) or range of lines (`min=` and/or `max=`) or both.  Does not use `header=`, `skip_comment=` nor `col=`. 
+
 **stripfilt** : strip header and comment lines beginning with `#`, or *only* pass headers and comment lines; can include empty/whitespace lines
 
 ````bash
@@ -89,6 +91,14 @@ stripfilt skip_blank=1 your.dat | ...
 ### Condensers: output condensed from and some function of the input
 
 **len** : print the length in characters of each line, excluding newline characters
+
+**lwhich** : print the line numbers of lines containing a specified value (`val=`) in a column (`col=`, default 1)
+
+Print the contents of the first, longest input line in `file` by first finding the maximum line length, then the first line number at which that line length occurs.  In addition to `lwhich`, this solution uses the tinyutils `len` and `max`. `line line=1` could also be used in place of `head -1`.
+
+```
+line line=$(len file | lwhich val=$(len file | max) | head -1) file
+```
 
 **ncol** : print the number of columns in each line
 
@@ -249,6 +259,21 @@ $ exp2 tests/tinyutils.dat
 512
 16
 
+$ line line=2 tests/tinyutils.dat
+9
+
+$ line min=7 tests/tinyutils.dat
+9
+4
+
+$ line max=2 tests/tinyutils.dat
+7
+9
+
+$ line min=3 max=4 tests/tinyutils.dat
+3
+12.2
+
 $ log tests/tinyutils.dat
 1.94591
 2.19722
@@ -278,6 +303,12 @@ $ log2 tests/tinyutils.dat
 3.58496
 3.16993
 2
+
+$ lwhich val=0 tests/tinyutils.dat
+5
+
+$ lwhich val=4 tests/tinyutils.dat
+8
 
 $ max tests/tinyutils.dat
 12.2

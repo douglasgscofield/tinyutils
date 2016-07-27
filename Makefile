@@ -9,9 +9,11 @@ UTILS = boolify \
 		histbin \
 		inrange \
 		len \
+		line \
 		log \
 		log10 \
 		log2 \
+		lwhich \
 		max \
 		mean \
 		median \
@@ -27,12 +29,27 @@ UTILS = boolify \
 
 ZIPFILE = tinyutils.zip
 TARBALL = tinyutils.tar.gz
+LINKSCRIPT = linkscript.sh
+SCRIPTDIR = $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 TESTDIR = tests
 TESTINPUT = tinyutils.dat
 TESTEXPECT = tinyutils.expected
 TESTOUTPUT = tinyutils.output
 TESTDIFF = tinyutils.testdiff
+
+linkscript: $(UTILS)
+	@echo "#!/bin/sh" > $(LINKSCRIPT)
+	@echo "SCRIPTDIR=$(SCRIPTDIR)" >> $(LINKSCRIPT)
+	@echo "for util in $(UTILS) ; do" >> $(LINKSCRIPT)
+	@echo "    if [ ! -e \$$util -o -L \$$util ] ; then" >> $(LINKSCRIPT)
+	@echo "        ln -sf $(SCRIPTDIR)/\$$util \$$util" >> $(LINKSCRIPT)
+	@echo "    else" >> $(LINKSCRIPT)
+	@echo "        echo Not linking \$$util: file exists and is not a symbolic link" >> $(LINKSCRIPT)
+	@echo "    fi" >> $(LINKSCRIPT)
+	@echo "done" >> $(LINKSCRIPT)
+	@chmod +x $(LINKSCRIPT)
+	@echo "$(LINKSCRIPT) created, run it to create symbolic links to tinyutils in current directory"
 
 all: test $(ZIPFILE) $(TARBALL)
 
@@ -86,6 +103,12 @@ $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 		echo 'stripfilt inverse=1 inverse_early=0 header=0' >> $(TESTOUTPUT); ../stripfilt inverse=1 inverse_early=0 header=0 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'inrange min=1 max=8' >> $(TESTOUTPUT); ../inrange min=1 max=8 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'inrange abs=4' >> $(TESTOUTPUT); ../inrange abs=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'line line=2' >> $(TESTOUTPUT); ../line line=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'line min=7' >> $(TESTOUTPUT); ../line min=7 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'line max=2' >> $(TESTOUTPUT); ../line max=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'line min=3 max=4' >> $(TESTOUTPUT); ../line min=3 max=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'lwhich val=0' >> $(TESTOUTPUT); ../lwhich val=0 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'lwhich val=4' >> $(TESTOUTPUT); ../lwhich val=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 	)
 
 clean:

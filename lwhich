@@ -1,0 +1,36 @@
+#!/usr/bin/awk -f
+#
+# Copyright (c) 2016 Douglas G. Scofield, Uppsala University
+# douglas.scofield@ebc.uu.se
+# douglasgscofield@gmail.com
+#
+# This code is covered by the Gnu GPLv2, please see LICENSE.
+# Bugs and suggestions to https://github.com/douglasgscofield/tinyutils/issues.
+#
+# Reports which line contains a column having the given value
+#
+# CHANGELOG
+# 2016-07-27 : create the script
+
+
+BEGIN { 
+    # parameters
+    FS = "\t"; 
+    OFS = "\t"; 
+    header = 0;        # does the input have a header? if so how many lines?
+    skip_comment = 1;  # skip '#' lines on input
+    val = "";          # the value to match
+    col = 1;           # which column do we lwhich?
+}
+
+{
+    if (NR <= header) { print; next; }
+    if (skip_comment && $0 ~ /^#/) { print; next; }
+
+    if (NF < col) {
+        print "on input line " NR " missing requested column" > "/dev/stderr";
+        next;
+    }
+    if ($(col) == val)
+        print NR;
+}
