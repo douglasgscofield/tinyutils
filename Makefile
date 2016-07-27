@@ -30,6 +30,7 @@ UTILS = boolify \
 		table
 
 LINKSCRIPT = linkscript.sh
+COPYSCRIPT = copyscript.sh
 SCRIPTDIR = $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 TESTDIR = tests
@@ -50,6 +51,19 @@ linkscript: $(UTILS)
 	@echo "done" >> $(LINKSCRIPT)
 	@chmod +x $(LINKSCRIPT)
 	@echo "$(LINKSCRIPT) created, run it to create symbolic links to tinyutils in current directory"
+
+copyscript: $(UTILS)
+	@echo "#!/bin/sh" > $(COPYSCRIPT)
+	@echo "SCRIPTDIR=$(SCRIPTDIR)" >> $(COPYSCRIPT)
+	@echo "for util in $(UTILS) ; do" >> $(COPYSCRIPT)
+	@echo "    if [ ! -e \$$util ] ; then" >> $(COPYSCRIPT)
+	@echo "        cp -pv $(SCRIPTDIR)/\$$util \$$util" >> $(COPYSCRIPT)
+	@echo "    else" >> $(COPYSCRIPT)
+	@echo "        echo Not copying \$$util: file exists" >> $(COPYSCRIPT)
+	@echo "    fi" >> $(COPYSCRIPT)
+	@echo "done" >> $(COPYSCRIPT)
+	@chmod +x $(COPYSCRIPT)
+	@echo "$(COPYSCRIPT) created, run it to copy tinyutils to current directory"
 
 all: test $(ZIPFILE) $(TARBALL)
 
