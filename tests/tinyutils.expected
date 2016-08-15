@@ -193,6 +193,27 @@ line max=2
 line min=3 max=4
 3
 12.2
+line stride=3
+7
+12.2
+9
+line stride=3 first=2
+9
+0
+4
+line stride=3 chunk=2
+7
+9
+12.2
+0
+9
+4
+line stride=3 first=2 chunk=2
+9
+3
+0
+12
+4
 lwhich val=0
 5
 lwhich val=4

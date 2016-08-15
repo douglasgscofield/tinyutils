@@ -1,4 +1,4 @@
-VERSION = 1.3
+VERSION = 1.3-dev
 
 UTILS = boolify \
 		cumsum \
@@ -125,6 +125,10 @@ $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 		echo 'line min=7' >> $(TESTOUTPUT); ../line min=7 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line max=2' >> $(TESTOUTPUT); ../line max=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line min=3 max=4' >> $(TESTOUTPUT); ../line min=3 max=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'line stride=3' >> $(TESTOUTPUT); ../line stride=3 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'line stride=3 first=2' >> $(TESTOUTPUT); ../line stride=3 first=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'line stride=3 chunk=2' >> $(TESTOUTPUT); ../line stride=3 chunk=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'line stride=3 first=2 chunk=2' >> $(TESTOUTPUT); ../line stride=3 first=2 chunk=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'lwhich val=0' >> $(TESTOUTPUT); ../lwhich val=0 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'lwhich val=4' >> $(TESTOUTPUT); ../lwhich val=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 	)

@@ -66,7 +66,14 @@ inrange min=0 max=1000 your.dat | ...  # column 1 is between 0 and 1000 inclusiv
 inrange min=10000 your.dat | ... # column 1 is at least 10000 inclusive
 ````
 
-**line** : print a specific line (`line=`) or range of lines (`min=` and/or `max=`) or both.  Does not use `header=`, `skip_comment=` nor `col=`. 
+**line** : print a specific line (`line=`), range of lines (`min=` and/or `max=`), strides of lines (`stride=` with optionally `first=` and/or `chunk=`), or any combination; a line is printed if it matches any set of criteria.  Does not use `header=`, `skip_comment=` nor `col=`.
+
+````bash
+line stride=4 your.dat             # print every 4th line, starting with the 1st
+line stride=4 first=3 your.dat     # print every 4th line, starting with the 3rd
+line stride=4 chunk=2 your.dat     # print 1st and 2nd lines, 5th and 6th lines, ...
+line line=1 min=11 max=20 your.dat # print 1st line and 11th to 20th lines
+````
 
 **stripfilt** : strip header and comment lines beginning with `#`, or *only* pass headers and comment lines; can include empty/whitespace lines
 
@@ -273,6 +280,31 @@ $ line max=2 tests/tinyutils.dat
 $ line min=3 max=4 tests/tinyutils.dat
 3
 12.2
+
+$ line stride=3 tests/tinyutils.dat
+7
+12.2
+9
+
+$ line stride=3 chunk=2 tests/tinyutils.dat
+7
+9
+12.2
+0
+9
+4
+
+$ line stride=3 first=2 tests/tinyutils.dat
+9
+0
+4
+
+$ line stride=3 first=2 chunk=2 tests/tinyutils.dat
+9
+3
+0
+12
+4
 
 $ log tests/tinyutils.dat
 1.94591
