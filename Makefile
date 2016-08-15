@@ -1,4 +1,4 @@
-VERSION = 1.3-dev
+VERSION = 1.4
 
 UTILS = boolify \
 		cumsum \
