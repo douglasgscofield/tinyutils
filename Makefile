@@ -119,8 +119,9 @@ $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 		echo 'stripfilt inverse=1' >> $(TESTOUTPUT); ../stripfilt inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'stripfilt header=0 inverse=1' >> $(TESTOUTPUT); ../stripfilt header=0 inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'stripfilt inverse=1 inverse_early=0 header=0' >> $(TESTOUTPUT); ../stripfilt inverse=1 inverse_early=0 header=0 $(TESTINPUT) >> $(TESTOUTPUT) ; \
-		echo 'inrange min=1 max=8' >> $(TESTOUTPUT); ../inrange min=1 max=8 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'inrange abs=4' >> $(TESTOUTPUT); ../inrange abs=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'inrange min=1 max=8' >> $(TESTOUTPUT); ../inrange min=1 max=8 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'inrange min=1 max=8 inverse=1' >> $(TESTOUTPUT); ../inrange min=1 max=8 inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line line=2' >> $(TESTOUTPUT); ../line line=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line min=7' >> $(TESTOUTPUT); ../line min=7 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line max=2' >> $(TESTOUTPUT); ../line max=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
@@ -129,8 +130,10 @@ $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 		echo 'line stride=3 first=2' >> $(TESTOUTPUT); ../line stride=3 first=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line stride=3 chunk=2' >> $(TESTOUTPUT); ../line stride=3 chunk=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line stride=3 first=2 chunk=2' >> $(TESTOUTPUT); ../line stride=3 first=2 chunk=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'line stride=3 first=2 inverse=1' >> $(TESTOUTPUT); ../line stride=3 first=2 inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'lwhich val=0' >> $(TESTOUTPUT); ../lwhich val=0 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'lwhich val=4' >> $(TESTOUTPUT); ../lwhich val=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'lwhich val=4 inverse=1' >> $(TESTOUTPUT); ../lwhich val=4 inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 	)
 
 clean:
