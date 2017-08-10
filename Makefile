@@ -1,4 +1,4 @@
-VERSION = 1.4
+VERSION = 1.5
 
 UTILS = boolify \
 		cumsum \

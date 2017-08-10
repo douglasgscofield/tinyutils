@@ -11,7 +11,7 @@
 # except with inverse=1
 #
 # CHANGELOG
-# 2017-08-11 : add inverse option
+# 2017-08-10 : add inverse option
 # 2015-03-31 : fix bug with abs=: constrain option processing to first input line
 # 2014-05-27 : don't quit on missing-column error
 # 2013-05-15 : make FS and OFS be "\t" by default

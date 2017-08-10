@@ -12,7 +12,7 @@
 # min=/max=, or stride=/chunk=/first=.  These all may be specified or just one.
 #
 # CHANGELOG
-# 2017-08-11 : add inverse= option
+# 2017-08-10 : add inverse= option
 # 2016-08-15 : start stride mode with stride=, first=, chunk=
 #              stride= number of lines in stride; stride=4 is every fourth line
 #              first= line to begin strides

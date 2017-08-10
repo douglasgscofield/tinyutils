@@ -10,7 +10,7 @@
 # Reports which line contains a column having the given value
 #
 # CHANGELOG
-# 2017-08-11 : add inverse= option
+# 2017-08-10 : add inverse= option
 # 2016-07-27 : create the script
 
 
