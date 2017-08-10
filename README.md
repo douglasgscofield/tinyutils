@@ -64,7 +64,7 @@ inrange min=0 max=1000 your.dat | ...  # column 1 is between 0 and 1000 inclusiv
 inrange min=10000 your.dat | ... # column 1 is at least 10000 inclusive
 ````
 
-With `inverse=1`, pass through lines that do not fall within the range of values, like `grep -v`.
+With `inverse=1`, `inrange` will pass through lines that **do not** fall within the range of values, like `grep -v`.
 
 **line** : print a specific line (`line=`), range of lines (`min=` and/or `max=`), strides of lines (`stride=` with optionally `first=` and/or `chunk=`), or any combination; a line is printed if it matches any set of criteria.  Does not use `header=`, `skip_comment=` nor `col=`.
 
