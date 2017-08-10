@@ -12,6 +12,7 @@
 # min=/max=, or stride=/chunk=/first=.  These all may be specified or just one.
 #
 # CHANGELOG
+# 2017-08-11 : add inverse= option
 # 2016-08-15 : start stride mode with stride=, first=, chunk=
 #              stride= number of lines in stride; stride=4 is every fourth line
 #              first= line to begin strides
@@ -27,6 +28,7 @@ BEGIN {
     stride = 0;   # stride size
     first = 1;    # first line of stride
     chunk = 1;    # number of lines to take per stride
+    inverse = 0;  # invert the sense of the filter, print lines that do not fit
 
     # internal variables
     _print_line = 0;  # print the current line?
@@ -81,6 +83,10 @@ BEGIN {
         # no more lines to show
         exit 0;
     }
-    if (_print_line)
+    if (_print_line) {
+        if (inverse == 0)
+            print;
+    } else if (inverse == 1)
         print;
 }
+
