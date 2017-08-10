@@ -7,9 +7,11 @@
 # This code is covered by the Gnu GPLv2, please see LICENSE.
 # Bugs and suggestions to https://github.com/douglasgscofield/tinyutils/issues.
 #
-# Only pass along data lines for which column values fall within the specified range
+# Only pass along data lines for which column values fall within the specified range,
+# except with inverse=1
 #
 # CHANGELOG
+# 2017-08-11 : add inverse option
 # 2015-03-31 : fix bug with abs=: constrain option processing to first input line
 # 2014-05-27 : don't quit on missing-column error
 # 2013-05-15 : make FS and OFS be "\t" by default
@@ -27,6 +29,7 @@ BEGIN {
     skip_comment = 1;  # skip '#' lines on input
     skip_missing = 1;  # skip lines without the column
     col = 1;           # which column do we operate on?
+    inverse = 0;       # invert the sense of the test: all but the lines that are in range
 }
 
 {
@@ -56,7 +59,10 @@ BEGIN {
             next;
         }
     }
-    if ((min == "undef" || $(col) >= min) && (max == "undef" || $(col) <= max))
+    if ((min == "undef" || $(col) >= min) && (max == "undef" || $(col) <= max)) {
+        if (inverse == 0)
+            print;
+    } else if (inverse == 1)
         print;
 }
 

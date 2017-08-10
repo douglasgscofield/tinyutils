@@ -22,11 +22,9 @@ $ zcat indels.vcf.gz \
 ▁▁▁▁▁▁▁▁▂█▁▇▂▁▁▁▁▁▁▁▁
 ````
 
-We get the second column of **hist** output because that's the counts.  This clearly shows the overabundance of single-base indels, and a slight overrepresentation of single-base deletions over insertions.
+The second column of **hist** output (`cut -f2`) holds the counts.  This clearly shows the typical overabundance of single-base indels, and a slight overrepresentation of single-base deletions over insertions.
 
 [VCF]:  http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41
-
-We get the second column of **hist** output because that's the counts.  This clearly shows the overabundance of single-base indels, and a slight overrepresentation of single-base deletions over insertions.
 
 
 ### Transformers: output same as input with single column transformed
@@ -65,6 +63,8 @@ inrange col=3 abs=10 your.dat | ... # column 3 is between -10 and 10 inclusive
 inrange min=0 max=1000 your.dat | ...  # column 1 is between 0 and 1000 inclusive
 inrange min=10000 your.dat | ... # column 1 is at least 10000 inclusive
 ````
+
+With `inverse=1`, pass through lines that do not fall within the range of values, like `grep -v`.
 
 **line** : print a specific line (`line=`), range of lines (`min=` and/or `max=`), strides of lines (`stride=` with optionally `first=` and/or `chunk=`), or any combination; a line is printed if it matches any set of criteria.  Does not use `header=`, `skip_comment=` nor `col=`.
 
