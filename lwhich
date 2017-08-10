@@ -10,6 +10,7 @@
 # Reports which line contains a column having the given value
 #
 # CHANGELOG
+# 2017-08-11 : add inverse= option
 # 2016-07-27 : create the script
 
 
@@ -21,6 +22,7 @@ BEGIN {
     skip_comment = 1;  # skip '#' lines on input
     val = "";          # the value to match
     col = 1;           # which column do we lwhich?
+    inverse = 0;       # print numbers of lines that do not contain the value in the specified column
 }
 
 {
@@ -31,6 +33,10 @@ BEGIN {
         print "on input line " NR " missing requested column" > "/dev/stderr";
         next;
     }
-    if ($(col) == val)
+    if ($(col) == val) {
+        if (inverse == 0)
+            print NR;
+    } else if (inverse == 1)
         print NR;
 }
+
