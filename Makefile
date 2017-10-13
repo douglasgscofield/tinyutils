@@ -41,7 +41,7 @@ TESTEXPECT = tinyutils.expected
 TESTOUTPUT = tinyutils.output
 TESTDIFF = tinyutils.testdiff
 
-all: test linkscript copyscript zipfile tarball
+all: test zipfile tarball linkscript copyscript
 
 linkscript: $(UTILS)
 	@echo "#!/bin/sh" > $(LINKSCRIPT)
@@ -69,26 +69,26 @@ copyscript: $(UTILS)
 	@chmod +x $(COPYSCRIPT)
 	@echo "$(COPYSCRIPT) created, run it to copy tinyutils to current directory"
 
-zipfile: $(UTILS) $(TESTDIR) $(LINKSCRIPT) $(COPYSCRIPT) Makefile README.md
+zipfile: $(UTILS) $(TESTDIR) Makefile README.md
 	@if [ -e $(TESTDIR)/$(TESTDIFF) -o -e $(TESTDIR)/$(TESTOUTPUT) ] ; then \
 		echo "$(TESTDIR)/ still contains $(TESTDIFF) and/or $(TESTOUTPUT)" ; \
 		exit 1; \
 	fi ;
 	@(  echo "Creating zipfile for version $(VERSION)" ; \
 		rm -f $(ZIPFILE) ; \
-		chmod 755 $(UTILS) $(TESTDIR) $(LINKSCRIPT) $(COPYSCRIPT); \
+		chmod 755 $(UTILS) $(TESTDIR); \
 		chmod 644 $(TESTDIR)/* Makefile README.md; \
 		zip -r $(ZIPFILE) $^ && echo "Created $(ZIPFILE)" ; \
 	)
 
-tarball: $(UTILS) $(TESTDIR) $(LINKSCRIPT) $(COPYSCRIPT) Makefile README.md
+tarball: $(UTILS) $(TESTDIR) Makefile README.md
 	@if [ -e $(TESTDIR)/$(TESTDIFF) -o -e $(TESTDIR)/$(TESTOUTPUT) ] ; then \
 		echo "$(TESTDIR)/ still contains $(TESTDIFF) and/or $(TESTOUTPUT)" ; \
 		exit 1; \
 	fi ;
 	@(  echo "Creating tarball for version $(VERSION)" ; \
 		rm -f $(TARBALL) ; \
-		chmod 755 $(UTILS) $(TESTDIR) $(LINKSCRIPT) $(COPYSCRIPT); \
+		chmod 755 $(UTILS) $(TESTDIR); \
 		chmod 644 $(TESTDIR)/* Makefile README.md; \
 		tar cvzf $(TARBALL) $^ && echo "Created $(TARBALL)" ; \
 	)
