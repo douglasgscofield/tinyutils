@@ -123,6 +123,7 @@ $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 		echo 'inrange min=1 max=8' >> $(TESTOUTPUT); ../inrange min=1 max=8 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'inrange min=1 max=8 inverse=1' >> $(TESTOUTPUT); ../inrange min=1 max=8 inverse=1 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line line=2' >> $(TESTOUTPUT); ../line line=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
+		echo 'line line=5 around=2' >> $(TESTOUTPUT); ../line line=5 around=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line min=7' >> $(TESTOUTPUT); ../line min=7 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line max=2' >> $(TESTOUTPUT); ../line max=2 $(TESTINPUT) >> $(TESTOUTPUT) ; \
 		echo 'line min=3 max=4' >> $(TESTOUTPUT); ../line min=3 max=4 $(TESTINPUT) >> $(TESTOUTPUT) ; \

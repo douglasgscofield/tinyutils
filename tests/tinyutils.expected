@@ -190,6 +190,12 @@ inrange min=1 max=8 inverse=1
 9
 line line=2
 9
+line line=5 around=2
+3
+12.2
+0
+12
+9
 line min=7
 9
 4
