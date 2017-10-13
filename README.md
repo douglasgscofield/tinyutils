@@ -67,13 +67,14 @@ inrange min=10000 your.dat | ... # column 1 is at least 10000 inclusive
 With `inverse=1`, `inrange` will pass through lines that **do not** fall within the range of values, like `grep -v`.
 
 
-**line** : print a specific line (`line=`), range of lines (`min=` and/or `max=`), strides of lines (`stride=` with optionally `first=` and/or `chunk=`), or any combination; a line is printed if it matches any set of criteria.  Does not use `header=`, `skip_comment=` nor `col=`.
+**line** : print a specific line (`line=`) including context lines around it (`around=`), range of lines (`min=` and/or `max=`), strides of lines (`stride=` with optionally `first=` and/or `chunk=`), or any combination; a line is printed if it matches any set of criteria.  Does not use `header=`, `skip_comment=` nor `col=`.
 
 ````bash
 line stride=4 your.dat             # print every 4th line, starting with the 1st
 line stride=4 first=3 your.dat     # print every 4th line, starting with the 3rd
 line stride=4 chunk=2 your.dat     # print 1st and 2nd lines, 5th and 6th lines, ...
 line line=1 min=11 max=20 your.dat # print 1st line and 11th to 20th lines
+line line=15 around=5 your.dat     # print line 15 and 5 lines before and after it
 ````
 
 With `inverse=1`, `line` will pass through lines that **do not** match the line specifications, like `grep -v`:
