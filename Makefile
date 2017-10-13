@@ -32,12 +32,16 @@ UTILS = boolify \
 LINKSCRIPT = linkscript.sh
 COPYSCRIPT = copyscript.sh
 SCRIPTDIR = $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+ZIPFILE = tinyutils-$(VERSION).zip
+TARBALL = tinyutils-$(VERSION).tar.gz
 
 TESTDIR = tests
 TESTINPUT = tinyutils.dat
 TESTEXPECT = tinyutils.expected
 TESTOUTPUT = tinyutils.output
 TESTDIFF = tinyutils.testdiff
+
+all: test linkscript copyscript zipfile tarball
 
 linkscript: $(UTILS)
 	@echo "#!/bin/sh" > $(LINKSCRIPT)
@@ -65,32 +69,28 @@ copyscript: $(UTILS)
 	@chmod +x $(COPYSCRIPT)
 	@echo "$(COPYSCRIPT) created, run it to copy tinyutils to current directory"
 
-all: test $(ZIPFILE) $(TARBALL)
-
-zipfile: $(UTILS) $(TESTDIR) Makefile README.md
+zipfile: $(UTILS) $(TESTDIR) $(LINKSCRIPT) $(COPYSCRIPT) Makefile README.md
 	@if [ -e $(TESTDIR)/$(TESTDIFF) -o -e $(TESTDIR)/$(TESTOUTPUT) ] ; then \
 		echo "$(TESTDIR)/ still contains $(TESTDIFF) and/or $(TESTOUTPUT)" ; \
 		exit 1; \
 	fi ;
 	@(  echo "Creating zipfile for version $(VERSION)" ; \
-	    ZIPFILE=tinyutils-$(VERSION).zip ; \
-		rm -f $$ZIPFILE ; \
-		chmod 755 $(UTILS) $(TESTDIR); \
+		rm -f $(ZIPFILE) ; \
+		chmod 755 $(UTILS) $(TESTDIR) $(LINKSCRIPT) $(COPYSCRIPT); \
 		chmod 644 $(TESTDIR)/* Makefile README.md; \
-		zip -r $$ZIPFILE $^ && echo "Created $$ZIPFILE" ; \
+		zip -r $(ZIPFILE) $^ && echo "Created $(ZIPFILE)" ; \
 	)
 
-tarball: $(UTILS) $(TESTDIR) Makefile README.md
+tarball: $(UTILS) $(TESTDIR) $(LINKSCRIPT) $(COPYSCRIPT) Makefile README.md
 	@if [ -e $(TESTDIR)/$(TESTDIFF) -o -e $(TESTDIR)/$(TESTOUTPUT) ] ; then \
 		echo "$(TESTDIR)/ still contains $(TESTDIFF) and/or $(TESTOUTPUT)" ; \
 		exit 1; \
 	fi ;
 	@(  echo "Creating tarball for version $(VERSION)" ; \
-	    TARBALL=tinyutils-$(VERSION).tar.gz ; \
-		rm -f $$TARBALL ; \
-		chmod 755 $(UTILS) $(TESTDIR); \
+		rm -f $(TARBALL) ; \
+		chmod 755 $(UTILS) $(TESTDIR) $(LINKSCRIPT) $(COPYSCRIPT); \
 		chmod 644 $(TESTDIR)/* Makefile README.md; \
-		tar cvzf $$TARBALL $^ && echo "Created $$TARBALL" ; \
+		tar cvzf $(TARBALL) $^ && echo "Created $(TARBALL)" ; \
 	)
 
 test: $(TESTDIR)/$(TESTOUTPUT)
@@ -103,7 +103,7 @@ test: $(TESTDIR)/$(TESTOUTPUT)
 		fi ; \
 	)
 
-# Sort table output for comparison because keys come out in various orders
+# Output for table test is sorted for comparison because keys come out in various orders
 
 $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 	@(  cd $(TESTDIR); rm -f $(TESTDIFF) ; \
@@ -138,6 +138,6 @@ $(TESTDIR)/$(TESTOUTPUT): $(UTILS)
 	)
 
 clean:
-	rm -f $(ZIPFILE) ; ( cd $(TESTDIR) ; rm -f $(TESTDIFF) $(TESTOUTPUT) )
+	rm -f $(LINKSCRIPT) $(COPYSCRIPT) $(ZIPFILE) $(TARBALL) ; ( cd $(TESTDIR) ; rm -f $(TESTDIFF) $(TESTOUTPUT) )
 
 .PHONY: $(UTILS)
