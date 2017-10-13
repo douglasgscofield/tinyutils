@@ -12,6 +12,7 @@
 # min=/max=, or stride=/chunk=/first=.  These all may be specified or just one.
 #
 # CHANGELOG
+# 2017-10-13 : add around=
 # 2017-08-10 : add inverse= option
 # 2016-08-15 : start stride mode with stride=, first=, chunk=
 #              stride= number of lines in stride; stride=4 is every fourth line
@@ -23,6 +24,7 @@
 BEGIN { 
     # parameters
     line = 0;     # a single line to show; always applies if supplied
+    around = 0;   # number of lines before and after line=
     min = 0;      # starting line of a line range
     max = 0;      # ending line of a line range
     stride = 0;   # stride size
@@ -42,7 +44,7 @@ BEGIN {
         if (!line && !min && !max && !stride) {
             print "no line(s) specified" > "/dev/stderr";
             exit 1;
-        } else if (line < 0 || min < 0 || max < 0 || stride < 0) {
+        } else if (line < 0 || around < 0 || min < 0 || max < 0 || stride < 0) {
             print "line specifiers must be 0 or positive" > "/dev/stderr";
             exit 1;
         } else if (max && min > max) {
@@ -62,7 +64,7 @@ BEGIN {
             _next_first = first;  # prime the stride
     }
     _print_line = 0;
-    if (line && NR == line) {
+    if (line && NR >= line - around && NR <= line + around) {
         _print_line = 1;
     } else if (min && NR >= min) {
         if (!max || (max && NR <= max))
@@ -78,7 +80,7 @@ BEGIN {
         _in_chunk = chunk - 1;
         _next_first = NR + stride;
     } else if (!stride &&
-               (((line && NR > line) && (!max || (max && NR > max))) ||
+               (((line && NR > line + around) && (!max || (max && NR > max))) ||
                 (!line && max && NR > max))) {
         # no more lines to show
         exit 0;
