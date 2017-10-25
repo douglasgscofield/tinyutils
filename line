@@ -70,7 +70,7 @@ BEGIN {
         if (!max || (max && NR <= max))
             _print_line = 1;
     } else if (max && NR <= max) {
-        if (!min || (min && NR >= max))
+        if (!min || (min && NR >= min))
             _print_line = 1;
     } else if (stride && _in_chunk) {
         _print_line = 1;
